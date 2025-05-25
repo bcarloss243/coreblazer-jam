@@ -1,0 +1,41 @@
+/* GumboPot.uss */
+.pot-panel {
+    background-color: #2b2b33;
+    border-width: 2px;
+    border-color: #f5d7b4;
+    padding: 10px;
+    width: 300px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.status-label {
+    color: #f0e8dc;
+    -unity-font-style: bold;
+    margin-bottom: 8px;
+}
+
+.reaction-label {
+    -unity-font-style: italic;
+    color: #ffefb2;
+    font-size: 14px;
+    padding-top: 4px;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.button-row {
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.action-btn {
+    background-color: #ffb48a;
+    height: 30px;
+    width: 100px;
+    -unity-text-align: middle-center;
+}
+.action-btn:hover {
+    background-color: #f7c96f;
+}

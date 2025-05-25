@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - GumboPot
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2367406079
+    locked: 0
+  - name: Midground
+    uniqueID: 1887868177
+    locked: 0
+  - name: PotAndObjects
+    uniqueID: 1816216521
+    locked: 0
+  - name: Characters
+    uniqueID: 2156465705
+    locked: 0
+  - name: UI
+    uniqueID: 3870637733
+    locked: 0

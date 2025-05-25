@@ -1,0 +1,71 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+  <!-- Adjust this path if you moved DialogueStyle.uss elsewhere -->
+  <Style src="project://Assets/UI/DialogueStyle.uss#DialogueStyle" />
+
+  <ui:VisualElement name="Root" class="dialogue-panel">
+
+    <!-- ── Header Strip ───────────────────────── -->
+    <ui:VisualElement name="HeaderBar" class="header-bar">
+      <ui:Label name="Title"  text="SEM-T"  class="title-label"  />
+      <ui:Label name="Status" text="GOLICH" class="status-label" />
+    </ui:VisualElement>
+
+    <!-- ── Main Content (two columns) ─────────── -->
+    <ui:VisualElement name="MainContent" class="main-content">
+
+      <!-- Left column: portrait, bars, back-story -->
+      <ui:VisualElement name="LeftColumn" class="left-column">
+
+        <ui:VisualElement name="SunPanel"  class="sun-panel" />
+
+        <ui:VisualElement name="MeterBars" class="meter-bars">
+          <ui:VisualElement class="bar-1" />
+          <ui:VisualElement class="bar-2" />
+          <ui:VisualElement class="bar-3" />
+        </ui:VisualElement>
+
+        <!-- Back-story text appears here -->
+        <ui:Label
+          name="BackstoryLabel"
+          text=""
+          class="backstory-label"
+          style="display: none;" />
+      </ui:VisualElement>
+
+      <!-- Right column: dialogue + interaction -->
+      <ui:VisualElement name="RightColumn" class="right-column">
+
+        <!-- Dialogue text area -->
+        <ui:VisualElement name="DialogueBox" class="dialogue-box">
+          <ui:Label name="DialogueText" text="Lorem ipsum..." />
+        </ui:VisualElement>
+
+        <!-- NPC portrait + name -->
+        <ui:VisualElement name="ProfileSection" class="profile-section">
+          <ui:Image name="Portrait" class="portrait" />
+          <ui:Label name="Name" text="Name" class="name-label" />
+        </ui:VisualElement>
+
+        <!-- Pre-quiz buttons -->
+        <ui:VisualElement name="ActionBox" class="action-box" style="display: flex;">
+          <ui:Button name="ShareBtn" text="Share Memory"      class="post-btn" />
+          <ui:Button name="AskBtn"   text="Ask for Ingredient" class="post-btn" />
+          <ui:Button name="OfferBtn" text="Offer Gumbo"       class="post-btn" />
+        </ui:VisualElement>
+
+        <!-- Quiz buttons -->
+        <ui:VisualElement name="ChoiceBox" class="choice-box" style="display: none;">
+          <ui:Label  name="QuestionText" text="???" class="question-text" />
+          <ui:Button text="Choice 1" class="choice-button" />
+          <ui:Button text="Choice 2" class="choice-button" />
+          <ui:Button text="Choice 3" class="choice-button" />
+        </ui:VisualElement>
+
+        <!-- Leave -->
+        <ui:Button name="ExitBtn" text="Leave" class="exit-button" style="display: none;" />
+
+      </ui:VisualElement>
+    </ui:VisualElement>
+  </ui:VisualElement>
+</ui:UXML>
+

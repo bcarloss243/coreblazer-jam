@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         xmlns:uie="UnityEditor.UIElements">
+  <!-- note the leading “Assets/…” here -->
+  <Style src="project://Assets/Prefabs/UI/GumboPot.uss#GumboPot" />
+
+  <ui:VisualElement name="Root" class="pot-panel">
+    <ui:Label name="StatusLabel"
+              text="Pot is idle..."
+              class="status-label" />
+
+    <ui:Label name="ReactionLabel"
+              text=""
+              class="reaction-label" />
+
+    <ui:VisualElement class="button-row">
+      <ui:Button name="AddButton"   text="Add Ingredient" class="action-btn"/>
+      <ui:Button name="CookButton"  text="Cook"           class="action-btn"/>
+      <ui:Button name="CloseButton" text="Close"          class="action-btn"/>
+    </ui:VisualElement>
+  </ui:VisualElement>
+</ui:UXML>

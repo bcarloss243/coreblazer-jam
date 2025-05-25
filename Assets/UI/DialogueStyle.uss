@@ -1,0 +1,121 @@
+/* DialogueStyle.uss — Unity 2022.3 compatible */
+
+/* ── Root panel ─────────────────────────────────────────── */
+.dialogue-panel {
+  background-color: #2b2b33;
+  flex-direction: column;
+  width: 520px;
+  height: 550px;
+  padding: 6px;
+
+  /* ← long-form border here ↓ */
+  border-top-width:    2px;
+  border-right-width:  2px;
+  border-bottom-width: 2px;
+  border-left-width:   2px;
+
+  border-top-color:    #f5d7b4;
+  border-right-color:  #f5d7b4;
+  border-bottom-color: #f5d7b4;
+  border-left-color:   #f5d7b4;
+}
+
+/* ── Header bar ─────────────────────────────────────────── */
+.header-bar {
+  background-color: #1c1c22;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 24px;
+  margin-bottom: 4px;
+}
+.title-label,
+.status-label {
+  color: #ffb48a;
+  -unity-font-style: bold;
+}
+
+/* ── Two-column split ───────────────────────────────────── */
+.main-content {
+  flex-direction: row;
+  flex-grow: 1;
+  margin-bottom: 4px;
+}
+
+/* ── Left column ────────────────────────────────────────── */
+.left-column {
+  width: 180px;
+  flex-direction: column;
+  margin-right: 4px;
+}
+.sun-panel          { height: 120px; background-color: #394447; margin-bottom: 4px; }
+.meter-bars         { flex-direction: column; margin-bottom: 4px; }
+.bar-1              { background-color: #ffb48a; height: 8px; margin-bottom: 2px; }
+.bar-2              { background-color: #9fe0d1; height: 8px; margin-bottom: 2px; }
+.bar-3              { background-color: #e6a1a6; height: 8px;               }
+
+/* back-story area */
+.backstory-label {
+  color: #f0e8dc;
+  -unity-font-style: italic;
+  font-size: 12px;
+  white-space: normal; /* allow wrapping */
+  margin-bottom: 4px;
+}
+
+/* ── Right column ───────────────────────────────────────── */
+.right-column { flex-direction: column; flex-grow: 1; }
+
+/* ── Dialogue box ───────────────────────────────────────── */
+.dialogue-box {
+  background-color: #1c1c22;
+  flex-grow: 1;
+  padding: 6px;
+  margin-bottom: 4px;
+
+  border-top-width:    2px;
+  border-right-width:  2px;
+  border-bottom-width: 2px;
+  border-left-width:   2px;
+
+  border-top-color:    #f5d7b4;
+  border-right-color:  #f5d7b4;
+  border-bottom-color: #f5d7b4;
+  border-left-color:   #f5d7b4;
+}
+.dialogue-box Label { color: #f0e8dc; }
+
+/* ── Profile section ─────────────────────────────────────── */
+.profile-section {
+  flex-direction: row;
+  align-items: center;
+  height: 56px;
+  margin-bottom: 4px;
+}
+.portrait {
+  width: 48px;
+  height: 48px;
+  margin-right: 8px;
+
+  border-top-width:    2px;
+  border-right-width:  2px;
+  border-bottom-width: 2px;
+  border-left-width:   2px;
+
+  border-top-color:    #f5d7b4;
+  border-right-color:  #f5d7b4;
+  border-bottom-color: #f5d7b4;
+  border-left-color:   #f5d7b4;
+}
+.name-label { color: #f7c96f; }
+
+/* ── Button stacks ───────────────────────────────────────── */
+.action-box, .choice-box { flex-direction: column; }
+.post-btn, .choice-button, .exit-button {
+  background-color: #ffb48a;
+  height: 26px;
+  -unity-text-align: middle-center;
+  margin-bottom: 4px;
+}
+.post-btn:hover,
+.choice-button:hover,
+.exit-button:hover { background-color: #f7c96f; }
