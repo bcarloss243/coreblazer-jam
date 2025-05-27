@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +24,22 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        // TEMP TEST for UI Wiring
+        DialogueUIController.Instance.SetDialogueText("A soft jazz melody sways in the distance...");
+        DialogueUIController.Instance.ShowBackstory("They say her gumbo could raise the dead. Or at least make them smile.");
+        DialogueUIController.Instance.ShowQuestion(
+            "What’s your name, sugar?",
+            new string[] { "Nina", "Lucien", "Remy" },
+            (int choice) =>
+            {
+                DialogueUIController.Instance.SetDialogueText("You picked: " + choice);
+            });
+
+        DialogueUIController.Instance.SetButtonsActive(true, true, true, true);
     }
 
     // — Ingredient Management —

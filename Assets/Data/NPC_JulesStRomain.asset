@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: Jules St. Romain
   portrait: {fileID: 21300000, guid: 2a79ddf3b620849d09bbba22e7550ea4, type: 3}
-  backstory: '"I still wake up at the hour when the greenhouse lamps flicker off
+  backstory: "Jules keeps a quiet shop behind the cathedral ruins, and his stall
+    always smells like fennel and ghosts. He never raises his voice, not even during
+    the storms. \u201CYour grandmother used to sing to her gumbo,\u201D he once told
+    Nina, almost to himself. \u201CSaid the pot remembered if you were kind.\u201D\n"
+  memoryText: '"I still wake up at the hour when the greenhouse lamps flicker off
     their dew-drenched leaves. I like watching tight celery ribs unfurl like soft
     green scrolls as I sing little French folk songs to myself and I prune each stalk,
     believing a kind word made them sweeter. I tuck fresh parsley sprigs among the

@@ -7,9 +7,11 @@ public class NPCData : ScriptableObject
     public string npcName;
     public Sprite portrait;
 
-    [Header("Backstory & Quiz")]
-    [TextArea] 
-    public string backstory;
+    [Header("Narrative")]
+    [TextArea] public string backstory;       // shown immediately on approach
+    [TextArea] public string memoryText;      // shown when "Share Memory" is clicked
+
+    [Header("Quiz")]
     public string question;
     public string[] answers = new string[3];
     public int correctAnswerIndex;

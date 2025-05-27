@@ -6,16 +6,21 @@ public class DialogueUIController : MonoBehaviour
 {
     public static DialogueUIController Instance;
 
-    [Header("UI Elements")]
+    [Header("Text Elements")]
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI questionText;
     public TextMeshProUGUI backstoryText;
 
+    [Header("Portrait")]
+    public Image portraitImage;
+
+    [Header("Quiz Buttons")]
     public GameObject choiceGroup;
     public Button choiceAButton;
     public Button choiceBButton;
     public Button choiceCButton;
 
+    [Header("Action Buttons")]
     public Button shareMemoryButton;
     public Button askIngredientButton;
     public Button offerGumboButton;
@@ -32,62 +37,102 @@ public class DialogueUIController : MonoBehaviour
         }
         Instance = this;
 
-        // Hook up quiz buttons
-        choiceAButton.onClick.AddListener(() => HandleChoice(0));
-        choiceBButton.onClick.AddListener(() => HandleChoice(1));
-        choiceCButton.onClick.AddListener(() => HandleChoice(2));
+        if (choiceAButton) choiceAButton.onClick.AddListener(() => HandleChoice(0));
+        if (choiceBButton) choiceBButton.onClick.AddListener(() => HandleChoice(1));
+        if (choiceCButton) choiceCButton.onClick.AddListener(() => HandleChoice(2));
+        if (exitButton) exitButton.onClick.AddListener(HidePanel);
 
-        // Initially hide quiz group
-        choiceGroup.SetActive(false);
+        choiceGroup?.SetActive(false);
+        gameObject.SetActive(false);
     }
 
-    // ────────────────────────────── Public API ──────────────────────────────
+    // ─────────────────────── Public API ───────────────────────
+
+    public void ShowPanel()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void HidePanel()
+    {
+        ClearUI();
+        gameObject.SetActive(false);
+    }
 
     public void SetDialogueText(string text)
     {
-        dialogueText.text = text;
+        if (dialogueText != null)
+            dialogueText.text = text;
+    }
+
+    public void SetQuestionText(string text)
+    {
+        if (questionText != null)
+            questionText.text = text;
     }
 
     public void ShowBackstory(string backstory)
     {
-        backstoryText.text = backstory;
-        backstoryText.gameObject.SetActive(true);
+        if (backstoryText != null)
+        {
+            backstoryText.text = backstory;
+            backstoryText.gameObject.SetActive(true);
+        }
+    }
+
+    public void SetPortrait(Sprite sprite)
+    {
+        if (portraitImage != null)
+        {
+            portraitImage.sprite = sprite;
+            portraitImage.gameObject.SetActive(sprite != null);
+        }
     }
 
     public void ShowQuestion(string question, string[] options, System.Action<int> callback)
     {
-        questionText.text = question;
+        SetQuestionText(question);
         onChoiceSelected = callback;
 
-        choiceAButton.GetComponentInChildren<TextMeshProUGUI>().text = options[0];
-        choiceBButton.GetComponentInChildren<TextMeshProUGUI>().text = options[1];
-        choiceCButton.GetComponentInChildren<TextMeshProUGUI>().text = options[2];
+        if (options.Length >= 3)
+        {
+            choiceAButton.GetComponentInChildren<TextMeshProUGUI>().text = options[0];
+            choiceBButton.GetComponentInChildren<TextMeshProUGUI>().text = options[1];
+            choiceCButton.GetComponentInChildren<TextMeshProUGUI>().text = options[2];
+        }
 
-        choiceGroup.SetActive(true);
+        choiceGroup?.SetActive(true);
     }
 
     public void HideQuestion()
     {
-        choiceGroup.SetActive(false);
+        choiceGroup?.SetActive(false);
     }
 
     public void SetButtonsActive(bool share, bool ask, bool offer, bool exit)
     {
-        shareMemoryButton.gameObject.SetActive(share);
-        askIngredientButton.gameObject.SetActive(ask);
-        offerGumboButton.gameObject.SetActive(offer);
-        exitButton.gameObject.SetActive(exit);
+        shareMemoryButton?.gameObject.SetActive(share);
+        askIngredientButton?.gameObject.SetActive(ask);
+        offerGumboButton?.gameObject.SetActive(offer);
+        exitButton?.gameObject.SetActive(exit);
     }
 
     public void ClearUI()
     {
-        dialogueText.text = "";
-        backstoryText.text = "";
-        questionText.text = "";
+        if (dialogueText) dialogueText.text = "";
+        if (questionText) questionText.text = "";
+        if (backstoryText)
+        {
+            backstoryText.text = "";
+            backstoryText.gameObject.SetActive(false);
+        }
+
+        SetPortrait(null);
         HideQuestion();
+        SetButtonsActive(false, false, false, false);
     }
 
-    // ────────────────────────────── Internal Logic ──────────────────────────────
+    // ─────────────────────── Internal Logic ───────────────────────
 
     private void HandleChoice(int index)
     {
