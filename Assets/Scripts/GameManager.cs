@@ -1,150 +1,131 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
-using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
 
+/// <summary>
+/// Owns the global ingredient list, servings counter, and win-condition checks.
+/// Fires events when a *new* core ingredient is added or when a perfect gumbo is cooked.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [Header("Perfect Gumbo Recipe")]
-    [Tooltip("List the main ingredientType of each of your 5 NPCs here")]
+    [Header("Perfect Gumbo Recipe (main ingredients only)")]
+    [Tooltip("Populate this with the main ingredientType of each NPC *in the Inspector*.")]
     public List<string> coreIngredients = new List<string>();
 
-    private HashSet<string> ingredients = new HashSet<string>();
-    private int gumboServings = 5; // starting servings
+    private readonly HashSet<string> _ingredients = new();
+    private int _servings = 5;
     private const int MAX_SERVINGS = 10;
-    private bool gumboFinished = false;
+    private bool _gumboFinished;
+
+    public UnityEvent<string> OnNewCoreIngredient = new();
+    public UnityEvent OnPerfectGumbo = new();
+    public UnityEvent OnTutorialComplete = new();
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
+    public bool AddIngredient(string ingredient, bool bonus)
     {
-        // TEMP TEST for UI Wiring
-        DialogueUIController.Instance.SetDialogueText("A soft jazz melody sways in the distance...");
-        DialogueUIController.Instance.ShowBackstory("They say her gumbo could raise the dead. Or at least make them smile.");
-        DialogueUIController.Instance.ShowQuestion(
-            "What’s your name, sugar?",
-            new string[] { "Nina", "Lucien", "Remy" },
-            (int choice) =>
-            {
-                DialogueUIController.Instance.SetDialogueText("You picked: " + choice);
-            });
-
-        DialogueUIController.Instance.SetButtonsActive(true, true, true, true);
-    }
-
-    // — Ingredient Management —
-
-    public void AddIngredient(string ingredient, bool bonus)
-    {
-        bool wasNew = ingredients.Add(ingredient);
-        if (wasNew)
+        bool isNew = _ingredients.Add(ingredient);
+        if (isNew)
         {
-            int toAdd = bonus ? 2 : 1;
-            gumboServings = Mathf.Min(gumboServings + toAdd, MAX_SERVINGS);
-            Debug.Log($"New ingredient added: {ingredient}. Bonus? {bonus}. Servings: {gumboServings}/{MAX_SERVINGS}");
+            int delta = bonus ? 2 : 1;
+            _servings = Mathf.Min(_servings + delta, MAX_SERVINGS);
+            Debug.Log($"Added {ingredient}. Bonus? {bonus}. Servings now {_servings}/{MAX_SERVINGS}");
+
+            if (coreIngredients.Contains(ingredient))
+                OnNewCoreIngredient.Invoke(ingredient);
+
+            // check for tutorial completion
+            if (HasTutorialIngredients())
+                OnTutorialComplete.Invoke();
         }
         else
         {
-            Debug.Log($"{ingredient} was already in the pot—no extra servings added.");
+            Debug.Log($"{ingredient} already in pot – no changes.");
         }
+        return isNew;
     }
 
-    public void RemoveIngredient(string ingredient)
+    public void RemoveIngredient(string ingredient) => _ingredients.Remove(ingredient);
+
+    public bool HasIngredient(string ingredient) => _ingredients.Contains(ingredient);
+
+    public int GetIngredientCount(string ingredient) => _ingredients.Contains(ingredient) ? 1 : 0;
+
+    public int RemainingServings => _servings;
+
+    public void EatServing()
     {
-        if (ingredients.Remove(ingredient))
-            Debug.Log($"Removed {ingredient} from the pot.");
+        if (_servings <= 0) { Debug.Log("Pot is empty."); return; }
+        _servings--;
+        Debug.Log($"Nina ate a bowl. {_servings} left.");
     }
-
-    public int GetRemainingServings() => gumboServings;
-
-    public void EatFromPot()
-    {
-        if (gumboServings > 0)
-        {
-            gumboServings--;
-            Debug.Log($"Nina ate a serving! Servings left: {gumboServings}");
-        }
-        else
-        {
-            Debug.Log("The gumbo pot is empty—no servings left!");
-        }
-    }
-
-    // — Perfect Gumbo Check & Cooking —
 
     public bool HasAllCoreIngredients()
     {
-        foreach (var req in coreIngredients)
-            if (!ingredients.Contains(req))
-                return false;
+        foreach (string req in coreIngredients)
+            if (!_ingredients.Contains(req)) return false;
         return true;
+    }
+
+    public int CountCoreIngredients()
+    {
+        int count = 0;
+        foreach (string req in coreIngredients)
+            if (_ingredients.Contains(req)) count++;
+        return count;
+    }
+
+    public bool HasTutorialIngredients()
+    {
+        return _ingredients.Contains("roux") && _ingredients.Contains("rice") && _ingredients.Contains("stock");
     }
 
     public bool CookGumbo(out string feedback)
     {
+        if (_gumboFinished)
+        {
+            feedback = "Gumbo is already perfect!";
+            return false;
+        }
+
         if (!HasAllCoreIngredients())
         {
-            feedback = "You’re missing some ingredients!";
+            feedback = "Still missing ingredients.";
             return false;
         }
 
-        foreach (var req in coreIngredients)
-            RemoveIngredient(req);
+        foreach (string req in coreIngredients)
+            _ingredients.Remove(req);
 
-        feedback = "Perfect gumbo! You did it!";
-        gumboFinished = true;
+        _gumboFinished = true;
+        feedback = "Perfect gumbo!";
+        OnPerfectGumbo.Invoke();
         return true;
     }
 
-    public bool IsGumboFinished() => gumboFinished;
-
-    // — NPC “Give Me Ingredient” Helpers —
-
-    public bool TryGiveIngredient(string ingredient, out string feedback)
-    {
-        if (ingredients.Contains(ingredient))
-        {
-            feedback = "Hey, that’s rude—you already have that from me.";
-            return false;
-        }
-
-        AddIngredient(ingredient, bonus: false);
-        feedback = $"Here you go—one {ingredient} coming right up.";
-        return true;
-    }
-
-    public int GetIngredientCount(string ingredient) =>
-        ingredients.Contains(ingredient) ? 1 : 0;
-
-    // — Ingredient Reactions —
+    public bool GumboFinished => _gumboFinished;
 
     public string GetIngredientReaction(string ingredient, bool bonus)
     {
-        if (bonus)
-        {
-            // Generic message for spices or extra ingredients
-            return $"{ingredient} joins the gumbo.";
-        }
+        if (bonus) return $"{ingredient} sprinkles into the pot with a sparkle.";
 
-        // Poetic lines for core ingredients
         return ingredient switch
         {
             "celery"      => "Celery drops in with a soft sizzle.",
-            "andouille"   => "The andouille makes the broth bubble joyfully.",
-            "bell pepper" => "Bell pepper dissolves into light — like a memory she didn’t know she had.",
-            "onion"       => "Onion melts into the broth with a quiet sweetness.",
-            "chicken"     => "The chicken settles in, grounding everything with warmth.",
-            _             => $"You added {ingredient} to the pot."
+            "andouille"   => "The andouille wakes the broth, crackling with smoke.",
+            "bell pepper" => "Bell pepper melts into light—like an old memory.",
+            "onion"       => "Onion softens, sweet and sure.",
+            "chicken"     => "Chicken settles in, grounding the whole brew.",
+            _             => $"{ingredient} slips into the gumbo."
         };
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 687162802593398194}
   - component: {fileID: 7225008776938044701}
   m_Layer: 0
-  m_Name: NPC_JulesStRomain
+  m_Name: NPC_HenriBoudreux
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b33c1f83e57574ae5a02f0bdc6a04328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 6b1c5900621774fb29554014dd873a2c, type: 2}
+  data: {fileID: 11400000, guid: 4067b8c34e326418d946451b9aeb8c9b, type: 2}
   ingredientPrefab: {fileID: 3868147556347706925, guid: e5cac3b3b037741f08a72d2efbf93425, type: 3}
 --- !u!212 &687162802593398194
 SpriteRenderer:
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_SortingLayerID: -2138501591
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: b6f38f05fdc3f4af699a3d5ade1c65b9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 003ef3b2b2cc74546a9be0ace7a890bc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -136,7 +136,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 1.54, y: 1.49}
     newSize: {x: 1.28, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -19,21 +19,29 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         collider.isTrigger = true;
     }
 
-    #region IInteractable Registration
     void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log($"Entered trigger of {gameObject.name} with: {col.gameObject.name}");
+
         if (col.CompareTag("Player"))
+        {
+            Debug.Log($"Registering interactable: {gameObject.name}");
             InteractionManager.Instance.Register(this);
+        }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
+        {
             InteractionManager.Instance.Unregister(this);
+        }
     }
 
     public void OnInteract()
     {
+        Debug.Log($"Interacted with {data.npcName}");
+
         var ui = DialogueUIController.Instance;
         ui.ClearUI();
         ui.ShowPanel();
@@ -42,12 +50,7 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         ui.ShowBackstory(data.backstory);
         ui.SetPortrait(data.portrait);
 
-        ui.SetButtonsActive(
-            !_memoryShared,  // Share Memory
-            !_memoryShared,  // Ask for Ingredient
-            true,            // Offer Gumbo
-            true             // Exit
-        );
+        ui.SetButtonsActive(!_memoryShared, !_memoryShared, true, true);
 
         ui.shareMemoryButton.onClick.RemoveAllListeners();
         ui.askIngredientButton.onClick.RemoveAllListeners();
@@ -59,7 +62,6 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         ui.offerGumboButton.onClick.AddListener(OnOfferGumbo);
         ui.exitButton.onClick.AddListener(EndInteraction);
     }
-    #endregion
 
     void OnShareMemory()
     {
@@ -71,13 +73,13 @@ public class NPCInteraction : MonoBehaviour, IInteractable
 
         var ui = DialogueUIController.Instance;
         ui.SetButtonsActive(false, false, true, true);
-        ui.SetDialogueText(data.memoryText); // Show memory in main dialogue box
+        ui.SetDialogueText(data.memoryText);
         StartCoroutine(DelayedQuiz());
     }
 
     IEnumerator DelayedQuiz()
     {
-        yield return new WaitForSeconds(4.5f); // Let memory linger longer
+        yield return new WaitForSeconds(4.5f);
 
         DialogueUIController.Instance.ShowQuestion(
             data.question,
@@ -94,7 +96,6 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         {
             _bonusGiven = true;
             SpawnIngredient(data.bonusIngredientType, 1);
-
             DialogueUIController.Instance.SetDialogueText(
                 "You really listened—and that means the world to me.\n\n(A subtle spice joins the pot.)"
             );

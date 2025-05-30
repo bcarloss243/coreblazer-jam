@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4011012082643943455}
   - component: {fileID: 4680093248355152877}
   m_Layer: 0
-  m_Name: IngredientOrange
+  m_Name: Pickup_Stock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

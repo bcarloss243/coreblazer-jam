@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55eba88d2380640e7a4c00ecf7c83c51, type: 3}
+  m_Name: NPC_Mireille_Augustin
+  m_EditorClassIdentifier: 
+  npcName: Mireille Augustin
+  portrait: {fileID: 21300000, guid: a5f17265a7dbd4e6f81859d02fadc4d2, type: 3}
+  backstory: "Mireille Augustin is the one people call before the ambulance, before
+    the priest. A healer, herbalist, and midwife, she keeps a parlor clinic behind
+    her family home in Trem\xE9, where the curtains always shift and a pot is always
+    steeping. She doesn\u2019t talk much, just listens, and somehow, you end up wanting
+    to tell her everything.\n\nNina\u2019s grandmother once sent her here after a
+    bad fever. Mireille broke the sweat with onion poultice and prayer, then made
+    Nina stay until she could laugh again."
+  memoryText: "\u201CYour grandmother brought you in with a fever, shaking like a
+    leaf. I split an onion, pressed it warm to your soles, and told you stories \u2018til
+    the color came back. That\u2019s what onions do, they draw things out, not just
+    from the skin, but from the spirit.\u201D"
+  question: "What songs did I whisper to coax the celery\u2019s sweetness?  "
+  answers:
+  - How to endure heat without complaint
+  - How to hold secrets tight
+  - How to let pain leave the body
+  correctAnswerIndex: 2
+  ingredientType: Onion
+  bonusIngredientType: "fil\xE9 powder"
+  requiredIngredientCount: 3
